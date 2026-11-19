@@ -1,0 +1,91 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap');
+
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  :root {
+
+    --accent: 22.1 100% 42%;
+
+    --accent-foreground: 222.2 84% 4.9%;
+
+    --background: 30 10% 92.2%;
+
+    --border: 30 4.9% 83.9%;
+
+    --card: 0 0% 100%;
+
+    --card-foreground: 222.2 84% 4.9%;
+
+    --destructive: 0 84.2% 60.2%;
+
+    --destructive-foreground: 210 40% 98%;
+
+    --font-body: 'Noto Sans', system-ui, sans-serif;
+
+    --font-heading: 'Noto Sans', system-ui, sans-serif;
+
+    --foreground: 0 0% 30.2%;
+
+    --input: 214.3 31.8% 91.4%;
+
+    --muted: 30 7.1% 89%;
+
+    --muted-foreground: 222.2 84% 4.9%;
+
+    --popover: 30 10% 92.2%;
+
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 209.2 77% 46.1%;
+
+    --primary-foreground: 0 0% 100%;
+
+    --radius: 0.19rem;
+
+    --ring: 209.2 77% 46.1%;
+
+    --secondary: 30 9.1% 95.7%;
+
+    --secondary-foreground: 222.2 84% 4.9%;
+
+  }
+}
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
+body { font-family: var(--font-body) !important; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading) !important; }
+
+
+
+@keyframes floatA { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(3deg); } }
+@keyframes floatB { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-15px) rotate(-2deg); } }
+@keyframes floatC { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-25px) rotate(2deg); } }
+@keyframes gradient-x { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+.animate-gradient-x { animation: gradient-x 6s ease infinite; background-size: 200% auto; }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes mask1{0%{stroke-dashoffset:180.87px}to{stroke-dashoffset:-180.87px}}
+@keyframes mask2{0%{stroke-dashoffset:214.83px}to{stroke-dashoffset:-146.91px}}
+@keyframes mask3{0%{stroke-dashoffset:257.43px}to{stroke-dashoffset:-104.31px}}
+@keyframes ddloader{0%{background-position:0}to{background-position:100%}}
+@keyframes reconnected{0%{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(2.5rem)}}
+@keyframes range-sweep{0%{background-position:180% 0}to{background-position:-90% 0}}
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 6px; }

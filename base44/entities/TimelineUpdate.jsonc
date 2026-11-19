@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "time_ago": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "TimelineUpdate"
+}
