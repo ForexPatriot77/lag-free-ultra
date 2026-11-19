@@ -8,6 +8,8 @@ import { defineConfig } from "vite";
 // Every runtime dependency is bundled at startup, for the browser and the SSR worker: one first imported
 // mid-session makes Vite re-bundle, and a page rendered meanwhile on the server loads a second React.
 // Not listed: React itself, the TanStack Start/Router framework (its plugin bundles it) and build-time plugins.
+const isGitHubPages = process.env.GITHUB_ACTIONS === "true";
+const pagesBasePath = "/lag-free-ultra";
 const NOT_PREBUNDLED = new Set(["react", "react-dom", "@base44/vite-plugin", "@tanstack/react-start", "@tanstack/react-router", "@tanstack/react-router-ssr-query", "tailwindcss-animate"]);
 const { dependencies } = JSON.parse(readFileSync(new URL("./package.json", import.meta.url), "utf8"));
 // The SDK's realtime transports: not direct dependencies, but app code importing one would otherwise be a new one.
@@ -24,6 +26,7 @@ const BROWSER_PREBUNDLE = [
 ];
 
 export default defineConfig({
+  base: isGitHubPages ? `${pagesBasePath}/` : "/",
   optimizeDeps: { include: [...PREBUNDLE, ...BROWSER_PREBUNDLE] },
   environments: {
     ssr: {
@@ -41,8 +44,11 @@ export default defineConfig({
       visualEditAgent: true,
     }),
     // No inspector: a restarted dev server would race the old one for port 9229 and crash.
-    cloudflare({ viteEnvironment: { name: "ssr" }, inspectorPort: false }),
-    tanstackStart({ srcDirectory: "src" }),
+    ...(!isGitHubPages ? [cloudflare({ viteEnvironment: { name: "ssr" }, inspectorPort: false })] : []),
+    tanstackStart({
+      srcDirectory: "src",
+      ...(isGitHubPages ? { router: { basepath: pagesBasePath }, spa: { enabled: true } } : {}),
+    }),
     react(),
   ],
 });
