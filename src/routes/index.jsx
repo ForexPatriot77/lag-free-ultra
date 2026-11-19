@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { base44 } from "@/api/base44Client";
 import { Users, User, Cpu, Trophy, Star } from "lucide-react";
+import ChessBoard from "@/components/ChessBoard";
 
 const AnimatedElement = ({ children, className, delay = 0 }) => {
   const ref = useRef(null);
@@ -44,42 +45,6 @@ const fallbackUpdates = [
   { time_ago: "3 days ago", text: "Our online chess league celebrates its 700th edition today after over 6 years — play starts at 2:00 PM!" },
   { time_ago: "4 days ago", text: "Our November 3+0 Warm-up Arena starts today at 1:00 PM!" },
 ];
-
-function Board({ pieces = {}, highlight = [], flip = false }) {
-  const squares = [];
-  for (let r = 0; r < 8; r++) {
-    for (let c = 0; c < 8; c++) {
-      const light = (r + c) % 2 === 0;
-      const key = `${r}-${c}`;
-      const piece = pieces[key];
-      squares.push(
-        <div
-          key={key}
-          className={`aspect-square flex items-center justify-center text-[clamp(18px,4vw,38px)] leading-none transition-colors duration-300 ${
-            highlight.includes(key) ? "bg-accent/50" : light ? "bg-[#f0d9b5] dark:bg-secondary" : "bg-[#b58863] dark:bg-primary/20"
-          }`}
-          style={!highlight.includes(key) && light ? { backgroundColor: 'hsl(var(--secondary))' } : !highlight.includes(key) && !light ? { backgroundColor: 'hsl(var(--primary) / 0.15)' } : {}}
-        >
-          {piece && (
-            <span
-              className={`font-bold transition-transform hover:scale-110 cursor-pointer ${
-                piece.w ? "text-card drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]" : "text-foreground drop-shadow-[0_1px_1px_rgba(255,255,255,0.3)]"
-              }`}
-            >
-              {piece.s}
-            </span>
-          )}
-        </div>
-      );
-    }
-  }
-  return <div className="grid grid-cols-8 rounded-sm overflow-hidden shadow-md border border-border/50">{squares}</div>;
-}
-
-const liveBoard = {
-  "1-6": { s: "♙", w: true }, "1-7": { s: "♚", w: false }, "2-4": { s: "♙", w: true }, "2-5": { s: "♔", w: true },
-  "4-6": { s: "♙", w: true }, "5-5": { s: "♗", w: true },
-};
 
 function HeroSection() {
   const [tab, setTab] = useState("quick");
@@ -257,16 +222,12 @@ function LowerSection() {
       <div className="relative max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-[1fr_2.4fr] gap-6 lg:gap-8">
         {/* Left column: live game */}
         <div className="space-y-6 order-2 lg:order-1">
-          <AnimatedElement delay={200} className="bg-card border border-border/50 p-3 rounded-sm shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex justify-between items-center text-xs font-medium text-muted-foreground mb-2 px-1">
-              <span className="text-foreground">SkyebreakImmortal <span className="text-accent ml-1">2753</span></span>
-              <span className="bg-muted px-1.5 py-0.5 rounded-sm">0:00</span>
+          <AnimatedElement delay={200} className="bg-card border border-border/50 p-3 sm:p-4 rounded-sm shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex justify-between items-center text-xs font-medium text-muted-foreground mb-3 px-1">
+              <span className="text-foreground">Practice board</span>
+              <span className="bg-muted px-1.5 py-0.5 rounded-sm">Local demo</span>
             </div>
-            <Board pieces={liveBoard} highlight={["0-6", "1-7"]} />
-            <div className="flex justify-between items-center text-xs font-medium text-muted-foreground mt-2 px-1">
-              <span className="text-foreground">Modrix14 <span className="ml-1">2849</span></span>
-              <span className="text-accent bg-accent/10 px-1.5 py-0.5 rounded-sm">0:02</span>
-            </div>
+            <ChessBoard />
           </AnimatedElement>
         </div>
 
