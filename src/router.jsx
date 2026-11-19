@@ -9,6 +9,7 @@ export function getRouter() {
   const queryClient = createQueryClient();
   const router = createRouter({
     routeTree,
+    basepath: import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL.replace(/\/$/, ""),
     context: { queryClient },
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
